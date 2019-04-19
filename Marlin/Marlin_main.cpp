@@ -2092,7 +2092,21 @@ void clean_up_after_endstop_or_probe_move() {
         }
       }
 
-      bltouch_command(deploy ? BLTOUCH_DEPLOY : BLTOUCH_STOW);
+      #if ENABLED(BLTOUCH_V3)
+        #if ENABLED(BLTOUCH_FORCE_5V_MODE)
+          bltouch_command(BLTOUCH_5V_MODE);
+        #else
+          bltouch_command(BLTOUCH_OD_MODE);
+        #endif
+      #endif
+      if (deploy) {
+        bltouch_command(BLTOUCH_DEPLOY);
+        #if ENABLED(BLTOUCH_V3)
+          bltouch_command(BLTOUCH_SW_MODE);
+        #endif
+      } else {
+        bltouch_command(BLTOUCH_STOW);
+      }
 
       #if ENABLED(DEBUG_LEVELING_FEATURE)
         if (DEBUGGING(LEVELING)) {
