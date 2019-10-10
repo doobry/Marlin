@@ -2247,11 +2247,6 @@ void clean_up_after_endstop_or_probe_move() {
       bltouch_last_written_mode = M5V;
     }
 
-    bool set_bltouch_deployed(const bool deploy) {
-      if (deploy) _bltouch_deploy(); else _bltouch_stow();
-      return false;
-    }
-
     void bltouch_mode_conv_5V()        { bltouch_mode_conv_proc(true); }
     void bltouch_mode_conv_OD()        { bltouch_mode_conv_proc(false); }
 
@@ -2259,6 +2254,10 @@ void clean_up_after_endstop_or_probe_move() {
     bool bltouch_deploy()              { return bltouch_deploy_proc(); }
     bool bltouch_stow()                { return bltouch_stow_proc(); }
     bool bltouch_status()              { return bltouch_status_proc(); }
+
+    bool set_bltouch_deployed(const bool deploy) {
+      return deploy ? bltouch_deploy() : bltouch_stow();
+    }
 
     // Init the class and device. Call from setup().
     void bltouch_init(const bool set_voltage/*=false*/) {

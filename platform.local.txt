@@ -1,0 +1,5 @@
+# GCC flags to reduce firmware size
+# copy to ~/Library/Arduino15/packages/Sanguino/hardware/avr/1.0.3/platform.local.txt
+compiler.c.extra_flags=-fno-tree-scev-cprop -fno-split-wide-types -ffast-math -mcall-prologues
+compiler.cpp.extra_flags=-fno-tree-scev-cprop -fno-split-wide-types -ffast-math -mcall-prologues
+compiler.c.elf.extra_flags=-Wl,--relax
